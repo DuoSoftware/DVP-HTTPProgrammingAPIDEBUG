@@ -13,6 +13,41 @@ socket.on('event', function(data){
     console.log(data);
 
 });
+socket.on('message', function(data){
+
+    //clc.red('red') + ' plain ' + clc.blue('blue')
+    data.forEach(function(item){
+
+        if(item.type == "message"){
+
+            console.log(clc.green("Info: ") + clc.green(item.info));
+            console.log(item.data);
+
+        }else if(item.type == "warnning"){
+            console.log(clc.yellow("Info: ") + clc.yellow(item.info));
+            console.log(item.data);
+
+
+        }else if(item.type == "action"){
+
+            console.log(clc.blue("Info: ") + clc.blue(item.info));
+            console.log(item.data);
+
+
+        }else if(item.type == "error"){
+
+
+            console.log(clc.red("Info: ") + clc.red(item.info));
+            console.log(item.data);
+
+        }
+
+    });
+
+    //console.log(data);
+
+});
+
 socket.on('disconnect', function(){
 
 
