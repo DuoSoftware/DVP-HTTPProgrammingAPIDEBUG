@@ -1,69 +1,93 @@
 
 var readline = require('readline');
-var socket = require('socket.io-client')('http://localhost:8088');
+var config = require('config');
+var socket = require('socket.io-client')(config.Debug.ip+":"+config.Debug.port);
 var clc = require('cli-color');
 
-socket.on('connect', function(){
+function ReconnectServer()
+{
+    socket.on('connect', function(){
 
-    socket.send('data XXXXXXXXX');
+        socket.send('data XXXXXXXXX');
 
-});
-socket.on('event', function(data){
+    });
+    socket.on('event', function(data){
 
-    console.log(data);
+        console.log(data);
 
-});
-socket.on('message', function(data){
+    });
+    socket.on('message', function(data){
 
-    //clc.red('red') + ' plain ' + clc.blue('blue')
-    data.forEach(function(item){
+        //clc.red('red') + ' plain ' + clc.blue('blue')
+        data.forEach(function(item){
 
-        if(item.type == "message"){
+            if(item.type == "message"){
 
-            console.log(clc.green("Info: ") + clc.green(item.info));
-            console.log(item.data);
+                console.log(clc.green("Info: ") + clc.green(item.info));
+                console.log(item.data);
 
-        }else if(item.type == "warnning"){
-            console.log(clc.yellow("Info: ") + clc.yellow(item.info));
-            console.log(item.data);
-
-
-        }else if(item.type == "action"){
-
-            console.log(clc.blue("Info: ") + clc.blue(item.info));
-            console.log(item.data);
+            }else if(item.type == "warnning"){
+                console.log(clc.yellow("Info: ") + clc.yellow(item.info));
+                console.log(item.data);
 
 
-        }else if(item.type == "error"){
+            }else if(item.type == "action"){
+
+                console.log(clc.blue("Info: ") + clc.blue(item.info));
+                console.log(item.data);
 
 
-            console.log(clc.red("Info: ") + clc.red(item.info));
-            console.log(item.data);
+            }else if(item.type == "error"){
 
-        }
+
+                console.log(clc.red("Info: ") + clc.red(item.info));
+                console.log(item.data);
+                socket.disconnect();
+
+            }
+
+        });
+
+        //console.log(data);
 
     });
 
-    //console.log(data);
-
-});
-
-socket.on('disconnect', function(){
+    socket.on('disconnect', function(){
 
 
-    console.log('disconnect');
-    process.exit(0);
-});
+        console.log('Disconnected with server \n'+"Press x for exit \n");
+        // process.exit(0);
+    });
+
+
+}
+
+ReconnectServer();
+
 
 
 var rl = readline.createInterface(process.stdin, process.stdout);
+
 //rl.setPrompt('guess> ');
 rl.prompt();
+
 rl.on('line', function(line) {
 
     socket.send(line);
-    if (line === "right") rl.close();
-    rl.prompt();
+
+    if (line == "x")
+    {
+        rl.close();
+        rl.prompt();
+        process.exit(0);
+    }
+    else
+    {
+        console.log("Press x for exit \n");
+    }
+
+
+
 
 }).on('close',function(){
     process.exit(0);
