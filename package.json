@@ -1,17 +1,15 @@
 {
   "name": "DVP-HTTPProgrammingAPIDEBUG",
-  "version": "0.0.0",
-  "description": "",
+  "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
+    "DVP-Common": "^0.0.0",
     "cli-color": "^1.0.0",
-    "socket.io": "^1.3.5",
+    "DVP-DBModels": "^0.0.0",
     "readline": "^0.0.7",
-    "socket.io-client": "^1.3.5",
     "request": "^2.55.0",
-    "DVP-Common": "DuoSoftware/DVP-Common",
-    "DVP-DBModels": "DuoSoftware/DVP-DBModels"
-
+    "socket.io": "^1.3.5",
+    "socket.io-client": "^1.3.5"
   },
   "devDependencies": {},
   "scripts": {

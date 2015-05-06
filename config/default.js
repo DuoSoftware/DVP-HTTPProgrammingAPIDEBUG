@@ -19,6 +19,11 @@ module.exports = {
     "ip":"127.0.0.1",
     "port":"8088"
 },
+    "HTTPServer" : {
+        "port": "8086",
+        "ip":"http://127.0.0.1"
+
+    },
 
 
     "Redis":
