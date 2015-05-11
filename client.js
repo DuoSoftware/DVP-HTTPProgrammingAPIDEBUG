@@ -1,7 +1,7 @@
 
 var readline = require('readline');
 var config = require('config');
-var socket = require('socket.io-client')("ws://127.0.0.1:8088");
+var socket = require('socket.io-client')(config.Socket.ip+":"+config.Socket.port);
 var clc = require('cli-color');
 
 var argsNum=0;
@@ -53,8 +53,11 @@ function ReconnectServer()
 
                 console.log(clc.red("Info: ") + clc.red(item.info));
                 console.log(item.data);
-                IsDone=true;
-                socket.disconnect();
+
+               IsDone=true;
+               socket.disconnect();
+                //console.log('got it');
+
 
             }
 
@@ -62,13 +65,14 @@ function ReconnectServer()
 
         //console.log(data);
 
+
     });
 
     socket.on('disconnect', function(){
 
 
         console.log('Disconnected with server \n'+"Press x for exit \n");
-        // process.exit(0);
+        //process.exit(0);
     });
 
 
@@ -92,7 +96,9 @@ rl.on('line', function(line) {
     {
         rl.close();
         process.exit(0);
+
     }
+
     else if(line == "d")
     {
         if(!IsDone)
@@ -121,6 +127,7 @@ rl.on('line', function(line) {
                 console.log('\n Enter Caller-Caller-ID-Number : ');
                 rl.prompt();
 
+                break;
                 break;
             case 3:
                 Caller_Caller_ID_Number=line;

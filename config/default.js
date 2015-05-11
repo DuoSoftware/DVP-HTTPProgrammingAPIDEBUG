@@ -2,7 +2,7 @@ module.exports = {
 
     "DB": {
         "Type":"postgres",
-        "User":"duo",
+        "User":"postgres",
         "Password":"DuoS123",
         "Port":5432,
         "Host":"127.0.0.1",
@@ -38,6 +38,20 @@ module.exports = {
         "domain": "0.0.0.0",
         "port": "8082",
         "version":"6.0"
+    },
+    "APP" :
+    {
+        "pbx": "none",
+        "domain":"192.168.8.100",
+        "profile": "default"
+
+    },
+    "Socket" :
+    {
+        "port": "8088",
+        "ip":"ws://127.0.0.1"
+
+
     }
 
 };

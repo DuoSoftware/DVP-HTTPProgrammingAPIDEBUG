@@ -28,7 +28,22 @@ module.exports = {
     "HTTPServer" : {
         "port": "HOST_PORT",
         "ip":"HOST_IP"
+    },
+    "APP" :
+    {
+        "pbx": "APP_PBX",
+        "domain":"APP_DOMAIN",
+        "profile": "APP_PROFILE"
+
+    },
+    "Socket" :
+    {
+        "port": "SKT_PORT",
+        "ip":"SKT_IP"
+
+
     }
+
 };
 
 //NODE_CONFIG_DIR
