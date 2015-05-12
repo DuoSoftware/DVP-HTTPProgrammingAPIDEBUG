@@ -1,10 +1,12 @@
 {
   "name": "DVP-HTTPProgrammingAPIDEBUG",
   "version": "1.0.0",
+  "description": "",
   "main": "app.js",
   "dependencies": {
-    "DVP-Common": "^0.0.0",
     "cli-color": "^1.0.0",
+    "config": "^1.13.0",
+    "DVP-Common": "^0.0.0",
     "DVP-DBModels": "^0.0.0",
     "readline": "^0.0.7",
     "request": "^2.55.0",
