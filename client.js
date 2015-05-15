@@ -12,26 +12,39 @@ var Caller_Caller_ID_Number="";
 var Caller_Destination_Number="";
 var Caller_Caller_ID_Name="";
 var result="";
+var uuid = require('node-uuid');
+var logger = require('DVP-Common/LogHandler/CommonLogHandler.js').logger;
 
 function ReconnectServer()
 {
-    socket.on('connect', function(){
-        console.log('connected');
+    var reqIdX='';
 
+    try
+    {
+        reqIdX = uuid.v1();
+    }
+    catch(ex)
+    {
+
+    }
+    socket.on('connect', function(){
+        //console.log('connected');
+        logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   Socket connected ',reqIdX);
         // socket.send('data XXXXXXXXX');
 
         argsNum++;
     });
     socket.on('event', function(data){
-
+        logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   Socket event fired  %s',reqIdX,data);
         console.log(data);
 
     });
     socket.on('message', function(data){
 
         //clc.red('red') + ' plain ' + clc.blue('blue')
+        logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   Socket message received  %s',reqIdX,data);
         data.forEach(function(item){
-
+            logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   Socket message received data type of  %s',reqIdX,item);
             if(item.type == "message"){
 
                 console.log(clc.green("Info: ") + clc.green(item.info));
@@ -70,8 +83,8 @@ function ReconnectServer()
 
     socket.on('disconnect', function(){
 
-
-        console.log('Disconnected with server \n'+"Press x for exit \n");
+        logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   Socket disconnected',reqIdX,data);
+        //console.log('Disconnected with server \n'+"Press x for exit \n");
         //process.exit(0);
     });
 
@@ -94,6 +107,7 @@ rl.on('line', function(line) {
 
     if (line == "x")
     {
+        logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [READLINE] - Read line received % and closing ',reqIdX,line);
         rl.close();
         process.exit(0);
 
@@ -101,6 +115,7 @@ rl.on('line', function(line) {
 
     else if(line == "d")
     {
+        logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [READLINE] - Read line received % ',reqIdX,line);
         if(!IsDone)
         {
             console.log('\n Enter Application ID : ');
@@ -169,6 +184,7 @@ rl.on('line', function(line) {
 
 
 }).on('close',function(){
+    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [READLINE] - Read line closed ',reqIdX);
     process.exit(0);
 });
 
@@ -182,8 +198,9 @@ function ObjectCreater()
         "Caller_Destination_Number":Caller_Destination_Number,
         "Caller_Caller_ID_Name":Caller_Caller_ID_Name,
         "result":result
-    }
+    };
     console.log(Data);
+    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s]  - Data for Socket push %s',reqIdX,JSON.stringify(Data));
     socket.send(JSON.stringify(Data));
 
 }

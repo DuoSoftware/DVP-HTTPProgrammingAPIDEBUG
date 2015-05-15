@@ -3,16 +3,45 @@ var request = require('request');
 var Dbcon=require('DVP-DBModels');
 var config=require('config');
 var io = require('socket.io')(config.Socket.port);
+var logger = require('DVP-Common/LogHandler/CommonLogHandler.js').logger;
+var uuid = require('node-uuid');
 
 var IsCreated=false;
 
 io.on('connection', function (socket) {
+    var reqId='';
 
-    socket.on('message', function (dataz) {
+        try
+        {
+            reqId = uuid.v1();
+        }
+        catch(ex)
+        {
 
+        }
+        // log.info("\n.............................................File Uploding Starts....................................................\n");
+        // log.info("Upload params  :- ComapnyId : "+req.params.cmp+" TenentId : "+req.params.ten+" Provision : "+req.params.prov);
+        logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Connection Starts  ',reqId);
+
+
+        socket.on('message', function (dataz) {
+
+            var reqIdX='';
+
+            try
+            {
+                reqIdX = uuid.v1();
+            }
+            catch(ex)
+            {
+
+            }
         var data=JSON.parse(dataz);
+            logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket received data  %s',reqIdX,data);
         if(IsCreated)
         {
+            logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket is already started  ',reqIdX);
+
             var optionsX = {url: config.HTTPServer.ip+":"+config.HTTPServer.port+"/debug/push", method: "POST", json: data};
 
 
@@ -20,23 +49,27 @@ io.on('connection', function (socket) {
 
                 if (!errorX && responseX != undefined && responseX.statusCode == 200) {
 
-
+                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket Sends response ',reqIdX,JSON.stringify(responseX.body));
                     socket.send(responseX.body);
 
 
                 }else
                 {
+                    logger.error('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket Sends error  ',reqIdX,JSON.stringify(errorX));
                     socket.send(errorX);
                 }
             });
         }
         else
         {
+            logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket starting stage  ',reqIdX);
             Dbcon.Application.find({where:{id:data.AppID}}).complete(function(err,result) {
                 if (err) {
-                    console.log(err);
+                    //console.log(err);
+                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - [PGSQL] - Error occurred while searching for Application %s  ',reqIdX,data.AppID,err);
                 }
                 else {
+                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - [PGSQL] - Records for Application %s  ',reqIdX,data.AppID,err);
                     var sessionid = '';
 
                     var createData = {
@@ -51,6 +84,7 @@ io.on('connection', function (socket) {
                     };
 
                     var options = {url: config.HTTPServer.ip+":"+config.HTTPServer.port+"/debug/create", method: "POST", json: createData};
+                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   HTTP request creation Data ',reqIdX,JSON.stringify(createData));
 
                     // console.log(data);
                     request(options, function (error, response, data) {
@@ -67,29 +101,30 @@ io.on('connection', function (socket) {
                              "Caller-Caller-ID-Name": data.Caller_Caller_ID_Name,
                              "result": data.result
 
-                             }
+                             };
 
                             var optionsX = {url: config.HTTPServer.ip+":"+config.HTTPServer.port+"/debug/push", method: "POST", json: requestData};
-
+                            logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   HTTP request push Data ',reqIdX,JSON.stringify(requestData));
 
                             request(optionsX, function (errorX, responseX, dataX) {
 
                                 if (!errorX && responseX != undefined && responseX.statusCode == 200) {
 
-
+                                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket Sends response ',reqIdX,JSON.stringify(responseX.body));
                                     socket.send(responseX.body);
 
 
                                 }
                                 else
                                 {
+                                    logger.error('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket Sends error  ',reqIdX,JSON.stringify(errorX));
                                     socket.send(errorX);
                                 }
                             });
                         }
                         socket.on('disconnect', function () {
 
-
+                            logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket Disconnection starts  ',reqIdX);
                             console.log('disconnect');
 
                             console.log(data);
@@ -103,7 +138,7 @@ io.on('connection', function (socket) {
 
                                 if (!errorX && responseX != undefined && responseX.statusCode == 200) {
 
-
+                                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket Disconnection request sends successfully   %s',reqIdX,JSON.stringify(responseX.body));
                                     socket.send(responseX.body);
 
 
