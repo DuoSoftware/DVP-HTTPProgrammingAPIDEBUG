@@ -54,6 +54,7 @@ function ReconnectServer()
                 console.log(clc.green("Info: ") + clc.green(item.info));
                 if(IsSessionFill)
                 {
+                    console.log("session already filled ",sessionID);
                     console.log(typeof (item.data));
                     console.log(item.data);
                 }else
@@ -74,7 +75,11 @@ function ReconnectServer()
             } else if (data.type == "session") {
 
                 console.log("Session Hit");
-                sessionID = item.ID;
+                if(!sessionID)
+                {
+                    sessionID = item.ID;
+                }
+
                 console.log("SessionID recieved " + sessionID);
 
             } else if (item.type == "action") {
@@ -114,7 +119,7 @@ function ReconnectServer()
         //process.exit(0);
         IsDone=false;
         argsNum=0;
-       // ReadlineManager();
+       //ReadlineManager();
         //ReadlineManager();
     });
 
