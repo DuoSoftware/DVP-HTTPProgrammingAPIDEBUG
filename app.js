@@ -6,7 +6,6 @@ var io = require('socket.io')(config.Socket.port);
 var logger = require('DVP-Common/LogHandler/CommonLogHandler.js').logger;
 var uuid = require('node-uuid');
 
-var IsCreated=false;
 var data=[];
 io.on('connection', function (socket) {
     var reqId='';
@@ -19,8 +18,6 @@ io.on('connection', function (socket) {
     {
 
     }
-    // log.info("\n.............................................File Uploding Starts....................................................\n");
-    // log.info("Upload params  :- ComapnyId : "+req.params.cmp+" TenentId : "+req.params.ten+" Provision : "+req.params.prov);
     logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Connection Starts  ',reqId);
 
     socket.on('disconnect', function (disReason) {
@@ -28,7 +25,6 @@ io.on('connection', function (socket) {
         logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket Disconnection starts  ');
         console.log(disReason);
 
-        //console.log(data);
 
     data["exiting"]="true";
         data["session_id"]=socket.Session;
@@ -90,11 +86,9 @@ io.on('connection', function (socket) {
         }
         else
         {
-            //IsCreated=true;
             logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket starting stage  ',reqIdX);
             Dbcon.Application.find({where:{id:data.AppID}}).complete(function(err,result) {
                 if (err) {
-                    //console.log(err);
                     logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - [PGSQL] - Error occurred while searching for Application %s  ',reqIdX,data.AppID,err);
                 }
                 else {
@@ -115,7 +109,6 @@ io.on('connection', function (socket) {
                     var options = {url: config.HTTPServer.ip+":"+config.HTTPServer.port+"/debug/create", method: "POST", json: createData};
                     logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   HTTP request creation Data ',reqIdX,JSON.stringify(createData));
 
-                    // console.log(data);
                     request(options, function (error, response, data) {
 
                         if (!error && response != undefined && response.statusCode == 200) {
@@ -127,10 +120,6 @@ io.on('connection', function (socket) {
 
 
                             socket.Session=sessionid;
-
-                            //socket.send(ArrSessionObj);
-
-
 
                             var requestData = {
                                 "session_id": sessionid,

@@ -29,9 +29,7 @@ function ReconnectServer()
 
     }
     socket.on('connect', function(){
-        //console.log('connected');
         logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   Socket connected ',reqIdX);
-        // socket.send('data XXXXXXXXX');
 
         argsNum++;
     });
@@ -42,8 +40,6 @@ function ReconnectServer()
     });
     socket.on('message', function(data) {
 
-        //clc.red('red') + ' plain ' + clc.blue('blue')
-        //console.log(typeof(data));
 
             logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   Socket message received  %s', reqIdX, data);
         data.forEach(function (item) {
@@ -98,16 +94,12 @@ function ReconnectServer()
                 IsDone = true;
 
                 socket.disconnect();
-                //ReadlineManager();
-                //console.log('got it');
-                //ReadlineManager();
 
 
             }
 
         });
 
-        //console.log(data);
 
 
     });
@@ -115,18 +107,13 @@ function ReconnectServer()
     socket.on('disconnect', function(){
 
         logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   Socket disconnected',reqIdX);
-        //console.log('Disconnected with server \n'+"Press x for exit \n");
-        //process.exit(0);
         IsDone=false;
         argsNum=0;
-       //ReadlineManager();
-        //ReadlineManager();
     });
 
 
 }
 
-//ReconnectServer();
 ReadlineManager();
 
 function ReadlineManager()
@@ -134,7 +121,6 @@ function ReadlineManager()
     ReconnectServer();
     var rl = readline.createInterface(process.stdin, process.stdout);
 
-//rl.setPrompt('guess> ');
 
     console.log('Press x to exit or d to start debugging');
     rl.prompt();
@@ -163,8 +149,6 @@ function ReadlineManager()
         {
             switch (argsNum) {
                 case 1:
-                    //console.log('\n Enter Application ID \n');
-                    //rl.prompt();
                     AppID=line;
                     console.log("App Id is : " + AppID);
                     argsNum++;
@@ -264,9 +248,7 @@ function InputSender(dt)
         };
         console.log(DataIn);
 
-        //console.log(JSON.stringify(datas));
         socket.send(JSON.stringify(DataIn));
-        //r1.close();
     });
 
 
