@@ -22,7 +22,7 @@ module.exports = {
     "Host":
     {
         "domain": "HOST_IP",
-        "port": "HOST_PORT",
+        "port": "HOST_HTTPPROGRAMMINGAPIDEBUG_PORT",
         "version":"HOST_VERSION"
     },
     "HTTPServer" : {
