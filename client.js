@@ -16,6 +16,9 @@ var uuid = require('node-uuid');
 var logger = require('DVP-Common/LogHandler/CommonLogHandler.js').logger;
 var sessionID='';
 var IsSessionFill=false;
+
+
+
 function ReconnectServer()
 {
     var reqIdX='';
