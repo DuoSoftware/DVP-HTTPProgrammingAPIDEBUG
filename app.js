@@ -3,7 +3,7 @@ var request = require('request');
 var Dbcon=require('dvp-dbmodels');
 var config=require('config');
 var io = require('socket.io')(config.Socket.port);
-var logger = require('Dvp-common/LogHandler/CommonLogHandler.js').logger;
+var logger = require('dvp-common/LogHandler/CommonLogHandler.js').logger;
 var uuid = require('node-uuid');
 
 var data=[];
