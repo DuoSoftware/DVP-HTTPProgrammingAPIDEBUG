@@ -12,8 +12,8 @@
     "readline": "^0.0.7",
     "DVP-DBModels": "^0.0.0",
     "socket.io": "^1.3.5",
-    "DVP-Common": "DuoSoftware/DVP-Common",
-    "DVP-DBModels": "DuoSoftware/DVP-DBModels"
+    "dvp-common": "0.0.2",
+    "dvp-dbmodels": "^0.0.19"
   },
   "devDependencies": {},
   "scripts": {
