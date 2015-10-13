@@ -13,7 +13,7 @@ var Caller_Destination_Number="";
 var Caller_Caller_ID_Name="";
 var result="";
 var uuid = require('node-uuid');
-var logger = require('DVP-Common/LogHandler/CommonLogHandler.js').logger;
+var logger = require('dvp-common/LogHandler/CommonLogHandler.js').logger;
 var sessionID='';
 var IsSessionFill=false;
 
