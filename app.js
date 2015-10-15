@@ -5,6 +5,7 @@ var config=require('config');
 var io = require('socket.io')(config.Socket.port);
 var logger = require('dvp-common/LogHandler/CommonLogHandler.js').logger;
 var uuid = require('node-uuid');
+var validator=require('validator');
 
 var data=[];
 io.on('connection', function (socket) {
@@ -29,7 +30,18 @@ io.on('connection', function (socket) {
     data["exiting"]="true";
         data["session_id"]=socket.Session;
 
-        var optionsX = {url: config.HTTPServer.ip+":"+config.HTTPServer.port+"/debug/push", method: "POST", json: data};
+        var HIP=config.HTTPServer.ip;
+        var HPORT=config.HTTPServer.port;
+
+        var url = HIP+"/debug/push";
+
+        if(validator.isIP(HIP))
+        {
+            url = HIP+":"+HPORT+"/debug/push";
+        }
+
+
+        var optionsX = {url: url, method: "POST", json: data};
 
 
         request(optionsX, function (errorX, responseX, dataX) {
@@ -66,7 +78,19 @@ io.on('connection', function (socket) {
         {
             logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket is already started  ',reqIdX);
 
-            var optionsX = {url: config.HTTPServer.ip+":"+config.HTTPServer.port+"/debug/push", method: "POST", json: data};
+            var HIP=config.HTTPServer.ip;
+            var HPORT=config.HTTPServer.port;
+
+            var url = HIP+"/debug/push";
+
+            if(validator.isIP(HIP))
+            {
+                url = HIP+":"+HPORT+"/debug/push";
+            }
+
+
+            var optionsX = {url: url, method: "POST", json: data};
+
 
 
             request(optionsX, function (errorX, responseX, dataX) {
@@ -106,7 +130,20 @@ io.on('connection', function (socket) {
                         "app":data.AppName
                     };
 
-                    var options = {url: config.HTTPServer.ip+":"+config.HTTPServer.port+"/debug/create", method: "POST", json: createData};
+                    var HIP=config.HTTPServer.ip;
+                    var HPORT=config.HTTPServer.port;
+
+                    var url = HIP+"/debug/push";
+
+                    if(validator.isIP(HIP))
+                    {
+                        url = HIP+":"+HPORT+"/debug/create";
+                    }
+
+
+                    var options = {url: url, method: "POST", json: createData};
+
+
                     logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   HTTP request creation Data ',reqIdX,JSON.stringify(createData));
 
                     request(options, function (error, response, data) {
@@ -132,7 +169,21 @@ io.on('connection', function (socket) {
 
                             };
 
-                            var optionsX = {url: config.HTTPServer.ip+":"+config.HTTPServer.port+"/debug/push", method: "POST", json: requestData};
+                            var HIP=config.HTTPServer.ip;
+                            var HPORT=config.HTTPServer.port;
+
+                            var url = HIP+"/debug/push";
+
+                            if(validator.isIP(HIP))
+                            {
+                                url = HIP+":"+HPORT+"/debug/push";
+                            }
+
+
+                            var optionsX = {url: url, method: "POST", json: requestData};
+
+
+
                             logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] -   HTTP request push Data ',reqIdX,JSON.stringify(requestData));
 
                             request(optionsX, function (errorX, responseX, dataX) {
