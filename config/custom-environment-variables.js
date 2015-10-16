@@ -15,10 +15,12 @@ module.exports = {
         "port": "REDIS_PORT"
 
     },
+    
     "Debug":{
         "ip":"SYS_DBG_IP",
         "port":"SYS_DBG_PORT"
     },
+
     "Host":
     {
         "domain": "HOST_IP",
@@ -26,7 +28,7 @@ module.exports = {
         "version":"HOST_VERSION"
     },
     "HTTPServer" : {
-        "port": "HOST_PORT",
+        "port": "SYS_HTTPPROGRAMMINGAPI_PORT",
         "ip":"HOST_IP"
     },
     "APP" :
