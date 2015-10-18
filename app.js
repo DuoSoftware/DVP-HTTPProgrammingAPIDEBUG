@@ -111,12 +111,16 @@ io.on('connection', function (socket) {
         else
         {
             logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - Socket starting stage  ',reqIdX);
-            Dbcon.Application.find({where:{id:data.AppID}}).complete(function(err,result) {
-                if (err) {
-                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - [PGSQL] - Error occurred while searching for Application %s  ',reqIdX,data.AppID,err);
+            Dbcon.Application.find({where:{id:data.AppID}}).then(function(result)
+            {
+                if(!result)
+                {
+                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - [PGSQL] - No Records for Application %s  ',reqIdX,data.AppID);
+
                 }
-                else {
-                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - [PGSQL] - Records for Application %s  ',reqIdX,data.AppID,err);
+                else
+                {
+                    logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - [PGSQL] - Records for Application %s  ',reqIdX,data.AppID);
                     var sessionid = '';
 
                     var createData = {
@@ -206,9 +210,18 @@ io.on('connection', function (socket) {
                         }
 
                     });
-
                 }
+
+
+
+            }).catch(function(err)
+            {
+                logger.debug('[DVP-HTTPProgrammingAPIDEBUG] - [%s] - [SOCKET] - [PGSQL] - Error occurred while searching for Application %s  ',reqIdX,data.AppID,err);
             });
+
+
+
+
         }
 
     });

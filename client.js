@@ -121,6 +121,9 @@ ReadlineManager();
 
 function ReadlineManager()
 {
+
+    console.log("Soc : "+config.Socket.ip+":"+config.Socket.port);
+    console.log("pbx: "+config.APP.pbx);
     ReconnectServer();
     var rl = readline.createInterface(process.stdin, process.stdout);
 
