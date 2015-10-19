@@ -37,13 +37,6 @@ module.exports = {
         "domain":"APP_DOMAIN",
         "profile": "APP_PROFILE"
 
-    },
-    "Socket" :
-    {
-        "port": "SKT_PORT",
-        "ip":"SKT_IP"
-
-
     }
 
 };

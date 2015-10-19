@@ -2,7 +2,7 @@
 var request = require('request');
 var Dbcon=require('dvp-dbmodels');
 var config=require('config');
-var io = require('socket.io')(config.Socket.port);
+var io = require('socket.io')(config.Host.port);
 var logger = require('dvp-common/LogHandler/CommonLogHandler.js').logger;
 var uuid = require('node-uuid');
 var validator=require('validator');
@@ -10,6 +10,7 @@ var validator=require('validator');
 var data=[];
 io.on('connection', function (socket) {
     var reqId='';
+    console.log("connected");
 
     try
     {

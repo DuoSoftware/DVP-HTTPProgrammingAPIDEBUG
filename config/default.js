@@ -42,13 +42,6 @@ module.exports = {
         "domain":"192.168.8.100",
         "profile": "default"
 
-    },
-    "Socket" :
-    {
-        "port": "8088",
-        "ip":"ws://127.0.0.1"
-
-
     }
 
 };

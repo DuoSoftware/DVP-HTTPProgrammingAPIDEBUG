@@ -1,7 +1,7 @@
 
 var readline = require('readline');
 var config = require('config');
-var socket = require('socket.io-client')(config.Socket.ip+":"+config.Socket.port);
+var socket = require('socket.io-client')(config.Host.domain+":"+config.Host.port);
 var clc = require('cli-color');
 
 var argsNum=0;
@@ -122,8 +122,7 @@ ReadlineManager();
 function ReadlineManager()
 {
 
-    console.log("Soc : "+config.Socket.ip+":"+config.Socket.port);
-    console.log("pbx: "+config.APP.pbx);
+
     ReconnectServer();
     var rl = readline.createInterface(process.stdin, process.stdout);
 
