@@ -8,6 +8,7 @@
 #EXPOSE 8825
 
 FROM node:argon
+RUN npm install npm -g
 RUN git clone git://github.com/DuoSoftware/DVP-HTTPProgrammingAPIDEBUG.git /usr/local/src/httpprogrammingapidebug
 RUN cd /usr/local/src/httpprogrammingapidebug;
 WORKDIR /usr/local/src/httpprogrammingapidebug
