@@ -25,8 +25,10 @@ module.exports = {
 
     },
     "Redis" : {
-        "ip": '127.0.0.1',
-        "port": 6379
+        "ip": '45.55.142.207',
+        "port": 6389,
+        "user": "",
+        "password": "DuoS123"
     },
 
 
@@ -41,6 +43,14 @@ module.exports = {
         "pbx": "none",
         "domain":"192.168.8.100",
         "profile": "default"
+
+    },
+    "Security":
+    {
+        "ip": "45.55.142.207",
+        "port": "6389",
+        "user": "",
+        "password": "DuoS123"
 
     }
 
